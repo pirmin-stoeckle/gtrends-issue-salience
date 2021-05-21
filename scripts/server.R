@@ -45,7 +45,8 @@ function(input, output) {
   
   dataInput_GTrends <- reactive({
     # gtrends data 
-    gtrends(keyword = c(input$searchterm), geo = "DE", time = "2004-01-01 2021-03-11")$interest_over_time
+    gtrends(keyword = c(input$searchterm), geo = "DE", time = "2004-01-01 2021-03-11")$interest_over_time %>% 
+      mutate(date2 = format(as.Date(date), "%Y-%m"))
     #gtrends(keyword = "Klimawandel", geo = "DE", time = "2004-01-01 2021-03-11")$interest_over_time
   })
   
@@ -68,7 +69,32 @@ function(input, output) {
     gtrends <- dataInput_GTrends()
     gtrends$hits <- as.numeric(ifelse(gtrends$hits == "<1", "0", gtrends$hits))
     mip_scaled_long <- dataInput_MIP()
-    plot_ly(mip_scaled_long, x = ~date, y = ~index, type = 'scatter', mode = 'lines')
+    
+    plot_ly(mip_scaled_long, 
+            x = ~date, 
+            y = ~index, 
+            type = 'scatter', 
+            mode = 'lines',
+            name = "MIP index") %>% 
+      add_lines(x = ~gtrends$date,
+                y = ~gtrends$hits,
+                name = "Google Trends index") %>% 
+      layout(xaxis = list(title = ""),
+             legend = list(orientation = 'h'))
+  })
+  
+  
+  # correlation
+  dataInput_correlation <- reactive({
+    merge <- dataInput_MIP() %>% 
+      mutate(date2 = format(as.Date(date), "%Y-%m")) %>% 
+      inner_join(dataInput_GTrends(), by = "date2")
+  })
+  
+  output$correlationBox <- renderInfoBox({
+    infoBox(
+      "R squared", round(summary(lm(index ~ hits, data = dataInput_correlation()))$r.squared, 2), icon = icon("calculator")
+    )
   })
   
 }

@@ -82,4 +82,14 @@ mip_scaled_long %>%
     theme_bw()
 
 # correlation
+gtrends2 <- gtrends %>% 
+  mutate(date2 = format(as.Date(date), "%Y-%m"))
+
+merge <- mip_scaled_long %>% 
+  filter(issue == issue_choice) %>% 
+  mutate(date2 = format(as.Date(date), "%Y-%m")) %>% 
+  inner_join(gtrends2, by = "date2")
+
+summary(lm(index ~ hits, data = merge))$r.squared
+
 
