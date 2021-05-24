@@ -5,7 +5,7 @@ library(ggthemes)
 library(plotly)
 
 # get MIP-data for Germany from Forschungsgruppe Wahlen
-src <- "https://www.forschungsgruppe.de/Umfragen/Politbarometer/Langzeitentwicklung_-_Themen_im_Ueberblick/Politik_II/9_Probleme_1.xlsx"
+src <- "https://www.forschungsgruppe.de/Umfragen/Politbarometer/Langzeitentwicklung_-_Themen_im_Ueberblick/Politik_II/9_Probleme_1_1.xlsx"
 lcl <- paste0(getwd(), "/data/", basename(src))
 
 # prepare folder for data, if not already done
