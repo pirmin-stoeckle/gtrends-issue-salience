@@ -5,7 +5,10 @@ library(tidyverse)
 library(ggthemes)
 library(plotly)
 
+# load MIP Data (if data does not already exist, run "get-mip-data.R")
+load(file=paste0(getwd(),"/data/MIP-Data.RData"))
 
+getwd()
 shinyUI(
 dashboardPage(
   dashboardHeader(title = 'Google Trends'),
