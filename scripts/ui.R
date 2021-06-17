@@ -1,5 +1,12 @@
+# load packages
 library(shinydashboard)
+library(gtrendsR)
+library(tidyverse)
+library(ggthemes)
+library(plotly)
 
+
+shinyUI(
 dashboardPage(
   dashboardHeader(title = 'Google Trends'),
   dashboardSidebar(
@@ -13,7 +20,7 @@ dashboardPage(
     )
   )
 )
-
+)
 
 # pageWithSidebar(
 #   headerPanel('Google Trends'),

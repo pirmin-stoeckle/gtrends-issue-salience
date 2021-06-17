@@ -41,7 +41,7 @@ mip_scaled_long <- pivot_longer(mip_scaled, cols = -date, names_to = "issue", va
 timeframe <- "2004-01-01 2021-03-11"
 country <- "DE"
 
-function(input, output) {
+shinyServer(function(input, output) {
   
   dataInput_GTrends <- reactive({
     # gtrends data 
@@ -98,3 +98,4 @@ function(input, output) {
   })
   
 }
+)
